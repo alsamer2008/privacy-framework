@@ -89,7 +89,7 @@ class PlgSystemScheduler extends JPlugin
 		}
 		catch (Exception $exc)
 		{
-			// If we failed to execite
+			// If we failed to execute
 			$db->unlockTables();
 			$result = false;
 		}
@@ -125,7 +125,7 @@ class PlgSystemScheduler extends JPlugin
 	}
 
 	/**
-	 * Check and Trigger .
+	 * Check and Trigger job
 	 *
 	 * @return  void
 	 *
@@ -139,7 +139,7 @@ class PlgSystemScheduler extends JPlugin
 			->select($db->quoteName(array('extension_id', 'name', 'params')))
 			->from($db->quoteName('#__extensions'))
 			->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))
-			->where($db->quoteName('folder') . ' = ' . $db->quote('cronnable'));
+			->where($db->quoteName('folder') . ' = ' . $db->quote('job'));
 
 		try
 		{
@@ -156,7 +156,7 @@ class PlgSystemScheduler extends JPlugin
 		}
 
 		// Unleash hell
-		JPluginHelper::importPlugin('cronnable');
+		JPluginHelper::importPlugin('job');
 		$dispatcher = JEventDispatcher::getInstance();
 
 		foreach ($tasks as $task)
