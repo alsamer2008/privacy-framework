@@ -18,7 +18,7 @@ CREATE TABLE [#__action_logs](
 	[extension] [nvarchar](255) NOT NULL DEFAULT '',
 	[user_id] [bigint] NOT NULL DEFAULT 0,
 	[item_id] [bigint] NOT NULL DEFAULT 0,
-	[ip_address] [nvarchar](30) NOT NULL DEFAULT '0.0.0.0',
+	[ip_address] [nvarchar](40) NOT NULL DEFAULT '0.0.0.0',
 	CONSTRAINT [PK_#__action_logs_id] PRIMARY KEY CLUSTERED
  (
  	[id] ASC
@@ -109,7 +109,7 @@ SELECT 8, 'menu_item', 'com_menus.item', 'id' , 'title' , '#__menu', 'PLG_ACTION
 UNION ALL
 SELECT 9, 'newsfeed', 'com_newsfeeds.newsfeed', 'id' ,'name' , '#__newsfeeds', 'PLG_ACTIONLOG_JOOMLA'
 UNION ALL
-SELECT 10, 'link', 'com_redirect.link', 'id', 'old_url' , '__redirect_links', 'PLG_ACTIONLOG_JOOMLA'
+SELECT 10, 'link', 'com_redirect.link', 'id', 'old_url' , '#__redirect_links', 'PLG_ACTIONLOG_JOOMLA'
 UNION ALL
 SELECT 11, 'tag', 'com_tags.tag', 'id', 'title' , '#__tags', 'PLG_ACTIONLOG_JOOMLA'
 UNION ALL
