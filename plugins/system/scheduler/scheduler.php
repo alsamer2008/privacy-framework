@@ -133,7 +133,7 @@ class PlgSystemScheduler extends JPlugin
 	 */
 	private function checkAndTrigger()
 	{
-		// Looks for cronnable plugin
+		// Looks for job plugins
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true)
 			->select($db->quoteName(array('extension_id', 'name', 'params')))
@@ -155,7 +155,7 @@ class PlgSystemScheduler extends JPlugin
 			return;
 		}
 
-		// Unleash hell
+		// Unleash the hell
 		JPluginHelper::importPlugin('job');
 		$dispatcher = JEventDispatcher::getInstance();
 
@@ -165,7 +165,7 @@ class PlgSystemScheduler extends JPlugin
 			$now        = time();
 
 			// Sanity check
-			if ((!isset($taskParams['lastrun'])) || (!isset($taskParams['cachetimeout'])))
+			if ((!isset($taskParams['lastrun'])) || (!isset($taskParams['cachetimeout'])) || (!isset($taskParams['unit'])))
 			{
 				continue;
 			}
