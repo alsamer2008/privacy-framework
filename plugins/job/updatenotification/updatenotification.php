@@ -1,16 +1,13 @@
 <?php
 /**
  * @package     Joomla.Plugin
- * @subpackage  System.updatenotification
+ * @subpackage  Job.updatenotification
  *
  * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
-
-// Uncomment the following line to enable debug mode (update notification email sent every single time)
-// define('PLG_SYSTEM_UPDATENOTIFICATION_DEBUG', 1);
 
 /**
  * Joomla! Update Notification plugin
@@ -21,7 +18,7 @@ defined('_JEXEC') or die;
  * consented to relicensing their plugin's code under GPLv2 or later (the original version was licensed under
  * GPLv3 or later) to allow its inclusion in the Joomla! CMS.
  *
- * @since  3.5
+ * @since  __DEPLOY_VERSION__
  */
 class PlgJobUpdatenotification extends JPlugin
 {
@@ -29,18 +26,18 @@ class PlgJobUpdatenotification extends JPlugin
 	 * Load plugin language files automatically
 	 *
 	 * @var    boolean
-	 * @since  3.6.3
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected $autoloadLanguage = true;
 
 	/**
-	 * The update check and notification email code is triggered after the page has fully rendered.
+	 * The update check and notification email code job trigger.
 	 *
 	 * @return  void
 	 *
-	 * @since   3.5
+	 * @since   __DEPLOY_VERSION__
 	 */
-	public function onAfterRender()
+	public function onExecuteScheduledTask()
 	{
 
 		// This is the extension ID for Joomla! itself
@@ -48,7 +45,7 @@ class PlgJobUpdatenotification extends JPlugin
 
 		// Get any available updates
 		$updater = JUpdater::getInstance();
-		$results = $updater->findUpdates(array($eid), $cache_timeout);
+		$results = $updater->findUpdates(array($eid));
 
 		// If there are no updates our job is done. We need BOTH this check AND the one below.
 		if (!$results)
@@ -128,21 +125,21 @@ class PlgJobUpdatenotification extends JPlugin
 		 * solution! 
 		 */
 		$jLanguage = JFactory::getLanguage();
-		$jLanguage->load('plg_system_updatenotification', JPATH_ADMINISTRATOR, 'en-GB', true, true);
-		$jLanguage->load('plg_system_updatenotification', JPATH_ADMINISTRATOR, null, true, false);
+		$jLanguage->load('plg_job_updatenotification', JPATH_ADMINISTRATOR, 'en-GB', true, true);
+		$jLanguage->load('plg_job_updatenotification', JPATH_ADMINISTRATOR, null, true, false);
 
 		// Then try loading the preferred (forced) language
 		$forcedLanguage = $this->params->get('language_override', '');
 
 		if (!empty($forcedLanguage))
 		{
-			$jLanguage->load('plg_system_updatenotification', JPATH_ADMINISTRATOR, $forcedLanguage, true, false);
+			$jLanguage->load('plg_job_updatenotification', JPATH_ADMINISTRATOR, $forcedLanguage, true, false);
 		}
 
 		// Set up the email subject and body
 
-		$email_subject = JText::_('PLG_SYSTEM_UPDATENOTIFICATION_EMAIL_SUBJECT');
-		$email_body    = JText::_('PLG_SYSTEM_UPDATENOTIFICATION_EMAIL_BODY');
+		$email_subject = JText::_('PLG_JOB_UPDATENOTIFICATION_EMAIL_SUBJECT');
+		$email_body    = JText::_('PLG_JOB_UPDATENOTIFICATION_EMAIL_BODY');
 
 		// Replace merge codes with their values
 		$newVersion = $update->version;
@@ -192,7 +189,7 @@ class PlgJobUpdatenotification extends JPlugin
 	 *
 	 * @return  array  The list of Super User emails
 	 *
-	 * @since   3.5
+	 * @since   __DEPLOY_VERSION__
 	 */
 	private function getSuperUsers($email = null)
 	{
