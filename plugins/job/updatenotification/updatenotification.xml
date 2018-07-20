@@ -49,7 +49,7 @@
 					default=""
 					client="administrator"
 					>
-					<option value="">PLG_SYSTEM_UPDATENOTIFICATION_LANGUAGE_OVERRIDE_NONE</option>
+					<option value="">PLG_JOB_UPDATENOTIFICATION_LANGUAGE_OVERRIDE_NONE</option>
 				</field>
 
 				<field
