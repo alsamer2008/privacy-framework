@@ -291,6 +291,43 @@ class PlgActionlogJoomla extends JPlugin
 	}
 
 	/**
+	 * On Saving application configuration logging method
+	 * Method is called when the application config is being saved
+	 *
+	 * @param   JRegistry  $config  JRegistry object with the new config
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function onApplicationAfterSave($config)
+	{
+		$option = $this->app->input->getCmd('option');
+
+		if (!$this->checkLoggable($option))
+		{
+			return;
+		}
+
+		$messageLanguageKey = strtoupper('PLG_ACTIONLOG_JOOMLA_APPLICATION_CONFIG_UPDATED');
+		$action             = 'update';
+
+		$user = JFactory::getUser();
+
+		$message = array(
+			'action'         => $action,
+			'type'           => strtoupper('PLG_ACTIONLOG_JOOMLA_TYPE_APPLICATION_CONFIG'),
+			'extension_name' => 'com_config.application',
+			'itemlink'       => 'index.php?option=com_config',
+			'userid'         => $user->id,
+			'username'       => $user->username,
+			'accountlink'    => 'index.php?option=com_users&task=user.edit&id=' . $user->id,
+		);
+
+		$this->addLog(array($message), $messageLanguageKey, 'com_config.application');
+	}
+
+	/**
 	 * On installing extensions logging method
 	 * This method adds a record to #__action_logs contains (message, date, context, user)
 	 * Method is called when an extension is installed
@@ -582,7 +619,12 @@ class PlgActionlogJoomla extends JPlugin
 
 		$jUser = JFactory::getUser();
 
-		if ($isnew)
+		if (!$jUser->id)
+		{
+			$messageLanguageKey = 'PLG_ACTIONLOG_JOOMLA_USER_REGISTERED';
+			$action             = 'register';
+		}
+		elseif ($isnew)
 		{
 			$messageLanguageKey = 'PLG_SYSTEM_ACTIONLOGS_CONTENT_ADDED';
 			$action             = 'add';
@@ -593,18 +635,21 @@ class PlgActionlogJoomla extends JPlugin
 			$action             = 'update';
 		}
 
+		$userId = $jUser->id ?: $user['id'];
+		$username = $jUser->username ?: $user['username'];
+
 		$message = array(
 			'action'      => $action,
 			'type'        => 'PLG_ACTIONLOG_JOOMLA_TYPE_USER',
 			'id'          => $user['id'],
 			'title'       => $user['name'],
 			'itemlink'    => 'index.php?option=com_users&task=user.edit&id=' . $user['id'],
-			'userid'      => $jUser->id,
-			'username'    => $jUser->username,
-			'accountlink' => 'index.php?option=com_users&task=user.edit&id=' . $jUser->id,
+			'userid'      => $userId,
+			'username'    => $username,
+			'accountlink' => 'index.php?option=com_users&task=user.edit&id=' . $userId,
 		);
 
-		$this->addLog(array($message), $messageLanguageKey, $context);
+		$this->addLog(array($message), $messageLanguageKey, $context, $userId);
 	}
 
 	/**

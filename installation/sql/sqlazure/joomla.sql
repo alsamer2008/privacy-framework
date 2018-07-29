@@ -893,7 +893,8 @@ INSERT INTO "#__extensions" ("extension_id", "package_id", "name", "type", "elem
 (490, 0, 'plg_privacy_contact', 'plugin', 'user', 'contact', 0, 1, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
 (491, 0, 'plg_privacy_content', 'plugin', 'user', 'content', 0, 1, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
 (492, 0, 'plg_privacy_message', 'plugin', 'user', 'message', 0, 1, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
-(493, 0, 'plg_system_scheduler', 'plugin', 'scheduler', 'system', 0, 1, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
+(493, 0, 'plg_privacy_actionlogs', 'plugin', 'actionlogs', 'privacy', 0, 0, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
+(494, 0, 'plg_system_scheduler', 'plugin', 'scheduler', 'system', 0, 1, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
 (503, 0, 'beez3', 'template', 'beez3', '', 0, 1, 1, 0, '', '{"wrapperSmall":"53","wrapperLarge":"72","sitetitle":"","sitedescription":"","navposition":"center","templatecolor":"nature"}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
 (504, 0, 'hathor', 'template', 'hathor', '', 1, 1, 1, 0, '', '{"showSiteName":"0","colourChoice":"0","boldText":"0"}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
 (506, 0, 'protostar', 'template', 'protostar', '', 0, 1, 1, 0, '', '{"templateColor":"","logoFile":"","googleFont":"1","googleFontName":"Open+Sans","fluidContainer":"0"}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
@@ -3136,10 +3137,10 @@ UNION ALL
 SELECT 17, 'com_users';
 
 SET IDENTITY_INSERT [#__action_logs_extensions]  OFF;
-/****** Object:  Table [#__action_logs_tables_data] ******/
+/****** Object:  Table [#__action_log_config] ******/
 SET QUOTED_IDENTIFIER ON;
 
-CREATE TABLE [#__action_logs_tables_data](
+CREATE TABLE [#__action_log_config](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[type_title] [nvarchar](255) NOT NULL DEFAULT '',
 	[type_alias] [nvarchar](255) NOT NULL DEFAULT '',
@@ -3147,15 +3148,15 @@ CREATE TABLE [#__action_logs_tables_data](
 	[title_holder] [nvarchar](255) NULL,
 	[table_name] [nvarchar](255) NULL,
 	[text_prefix] [nvarchar](255) NULL
-	CONSTRAINT [PK_#__action_logs_tables_data_id] PRIMARY KEY CLUSTERED
+	CONSTRAINT [PK_#__action_log_config_id] PRIMARY KEY CLUSTERED
  (
  	[id] ASC
  )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
  ) ON [PRIMARY];
 
-SET IDENTITY_INSERT [#__action_logs_tables_data]  ON;
+SET IDENTITY_INSERT [#__action_log_config]  ON;
 
-INSERT INTO [#__action_logs_tables_data] ([id], [type_title], [type_alias], [id_holder], [title_holder], [table_name], [text_prefix])
+INSERT INTO [#__action_log_config] ([id], [type_title], [type_alias], [id_holder], [title_holder], [table_name], [text_prefix])
 SELECT 1, 'article', 'com_content.article', 'id' ,'title' , '#__content', 'PLG_ACTIONLOG_JOOMLA'
 UNION ALL
 SELECT 2, 'article', 'com_content.form', 'id', 'title' , '#__content', 'PLG_ACTIONLOG_JOOMLA'
@@ -3190,9 +3191,11 @@ SELECT 16, 'module', 'com_modules.module', 'id' ,'title', '#__modules', 'PLG_ACT
 UNION ALL
 SELECT 17, 'access_level', 'com_users.level', 'id' , 'title', '#__viewlevels', 'PLG_ACTIONLOG_JOOMLA'
 UNION ALL
-SELECT 18, 'banner_client', 'com_banners.client', 'id', 'name', '#__banner_clients', 'PLG_ACTIONLOG_JOOMLA';
+SELECT 18, 'banner_client', 'com_banners.client', 'id', 'name', '#__banner_clients', 'PLG_ACTIONLOG_JOOMLA'
+UNION ALL
+SELECT 19, 'application_config', 'com_config.application', '', 'name', '', 'PLG_ACTIONLOG_JOOMLA';
 
-SET IDENTITY_INSERT [#__action_logs_tables_data]  OFF;
+SET IDENTITY_INSERT [#__action_log_config]  OFF;
 
 --
 -- Table structure for table `#__viewlevels`
