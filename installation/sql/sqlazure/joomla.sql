@@ -893,6 +893,7 @@ INSERT INTO "#__extensions" ("extension_id", "package_id", "name", "type", "elem
 (490, 0, 'plg_privacy_contact', 'plugin', 'user', 'contact', 0, 1, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
 (491, 0, 'plg_privacy_content', 'plugin', 'user', 'content', 0, 1, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
 (492, 0, 'plg_privacy_message', 'plugin', 'user', 'message', 0, 1, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
+(493, 0, 'plg_privacy_actionlogs', 'plugin', 'actionlogs', 'privacy', 0, 0, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
 (494, 0, 'plg_job_privacyconsent', 'plugin', 'privacyconsent', 'job', 0, 1, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
 (495, 0, 'plg_job_updatenotification', 'plugin', 'updatenotification', 'job', 0, 1, 1, 0, '', '{}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
 (503, 0, 'beez3', 'template', 'beez3', '', 0, 1, 1, 0, '', '{"wrapperSmall":"53","wrapperLarge":"72","sitetitle":"","sitedescription":"","navposition":"center","templatecolor":"nature"}', '', '', 0, '1900-01-01 00:00:00', 0, 0),
@@ -3191,7 +3192,9 @@ SELECT 16, 'module', 'com_modules.module', 'id' ,'title', '#__modules', 'PLG_ACT
 UNION ALL
 SELECT 17, 'access_level', 'com_users.level', 'id' , 'title', '#__viewlevels', 'PLG_ACTIONLOG_JOOMLA'
 UNION ALL
-SELECT 18, 'banner_client', 'com_banners.client', 'id', 'name', '#__banner_clients', 'PLG_ACTIONLOG_JOOMLA';
+SELECT 18, 'banner_client', 'com_banners.client', 'id', 'name', '#__banner_clients', 'PLG_ACTIONLOG_JOOMLA'
+UNION ALL
+SELECT 19, 'application_config', 'com_config.application', '', 'name', '', 'PLG_ACTIONLOG_JOOMLA';
 
 SET IDENTITY_INSERT [#__action_log_config]  OFF;
 
