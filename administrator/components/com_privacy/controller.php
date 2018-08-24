@@ -93,6 +93,12 @@ class PrivacyController extends JControllerLegacy
 
 					return $this;
 				}
+
+				// Make sure we don't send a referer
+				if ($lName === 'edit')
+				{
+					JFactory::getApplication()->setHeader('Referrer-Policy', 'no-referrer', true);
+				}
 			}
 
 			$view->setLayout($lName);
