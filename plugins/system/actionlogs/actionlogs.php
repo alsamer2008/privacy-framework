@@ -124,7 +124,8 @@ class PlgSystemActionLogs extends JPlugin
 			$link = JHtml::_(
 				'link',
 				JRoute::_('index.php?option=com_plugins&task=plugin.edit&extension_id=' . $pluginId),
-				JText::_('PLG_SYSTEM_ACTIONLOGS_JOOMLA_ACTIONLOG_DISABLED')
+				JText::_('PLG_SYSTEM_ACTIONLOGS_JOOMLA_ACTIONLOG_DISABLED'),
+				array('class' => 'alert-link')
 			);
 
 			$this->app->enqueueMessage(JText::sprintf('PLG_SYSTEM_ACTIONLOGS_JOOMLA_ACTIONLOG_DISABLED_REDIRECT', $link), 'notice');
