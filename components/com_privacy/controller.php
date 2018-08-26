@@ -39,7 +39,7 @@ class PrivacyController extends JControllerLegacy
 		}
 
 		// Make sure we don't send a referer
-		if ($view === 'request')
+		if (in_array($view, array('confirm', 'remind')))
 		{
 			JFactory::getApplication()->setHeader('Referrer-Policy', 'no-referrer', true);
 		}
