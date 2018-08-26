@@ -118,21 +118,14 @@ class PlgSystemActionLogs extends JPlugin
 			return true;
 		}
 
+		JForm::addFormPath(dirname(__FILE__) . '/forms');
+
 		if (!JPluginHelper::isEnabled('actionlog', 'joomla'))
 		{
-			$pluginId = $this->getActionlogPluginId();
-			$link = JHtml::_(
-				'link',
-				JRoute::_('index.php?option=com_plugins&task=plugin.edit&extension_id=' . $pluginId),
-				JText::_('PLG_SYSTEM_ACTIONLOGS_JOOMLA_ACTIONLOG_DISABLED'),
-				array('class' => 'alert-link')
-			);
-
-			$this->app->enqueueMessage(JText::sprintf('PLG_SYSTEM_ACTIONLOGS_JOOMLA_ACTIONLOG_DISABLED_REDIRECT', $link), 'notice');
+			$form->loadFile('information', false);
 			return true;
 		}
 
-		JForm::addFormPath(dirname(__FILE__) . '/forms');
 		$form->loadFile('actionlogs', false);
 	}
 
@@ -275,33 +268,5 @@ class PlgSystemActionLogs extends JPlugin
 				}
 			}
 		}
-	}
-
-	/**
-	 * Gets the joomla actionlog plugin extension id.
-	 *
-	 * @return  integer  The joomla actionlog plugin extension id.
-	 *
-	 * @since   __DEPLOY_VERSION__
-	 */
-	private static function getActionlogPluginId()
-	{
-		$db    = JFactory::getDbo();
-		$query = $db->getQuery(true)
-			->select($db->quoteName('extension_id'))
-			->from($db->quoteName('#__extensions'))
-			->where($db->quoteName('folder') . ' = ' . $db->quote('actionlog'))
-			->where($db->quoteName('element') . ' = ' . $db->quote('joomla'));
-		$db->setQuery($query);
-
-		try
-		{
-			$result = (int) $db->loadResult();
-		}
-		catch (RuntimeException $e)
-		{
-			JError::raiseWarning(500, $e->getMessage());
-		}
-		return $result;
 	}
 }
